@@ -236,6 +236,66 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 36100729}
   m_CullTransparentMesh: 0
+--- !u!1 &100276202
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 100276203}
+  - component: {fileID: 100276204}
+  m_Layer: 0
+  m_Name: AllManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &100276203
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 100276202}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 815.38306, y: 544.3133, z: 145.96338}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1376725533}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &100276204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 100276202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e319182881e7d4f87001f82369c471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoneyCurr: 100
+  MoneyText: {fileID: 2048205495}
+  PriceStuff: 10
+  ListBuyer:
+  - {fileID: 11400000, guid: e4aa1ac4b020a944993e1ad5ccbd1039, type: 2}
+  - {fileID: 11400000, guid: e037cce26c172e142a5996f2c79a643e, type: 2}
+  - {fileID: 11400000, guid: 4567be01f65ab014784e0e5d3639ddfe, type: 2}
+  ListMenu:
+  - {fileID: 11400000, guid: 7db2b8f752c28d84f8d231dbed423bd9, type: 2}
+  - {fileID: 11400000, guid: 4efc51742de332d4097278d7f3719ea2, type: 2}
+  - {fileID: 11400000, guid: 6d799ac959318e14cb48dea6cec7a3a1, type: 2}
+  GoalPerDay: 1e0000002800000032000000
+  TodayInt: 1
+  ProbabilityBuy: 50
+  Cuaca:
+  - IndexCuaca: 0
+    ProbabilityCuaca: 0
+  - IndexCuaca: 1
+    ProbabilityCuaca: 30
 --- !u!1 &237665570
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +965,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2048205494}
-  m_Father: {fileID: 1489578998}
+  m_Father: {fileID: 100276203}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -995,8 +1055,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1097.5, y: 614.3988, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1376725533}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1017,13 +1076,6 @@ MonoBehaviour:
   - Location1
   - Location2
   - Location3
-  MoneyCurr: 100
-  MoneyText: {fileID: 2048205495}
-  PriceStuff: 10
-  ListBuyer:
-  - {fileID: 11400000, guid: e4aa1ac4b020a944993e1ad5ccbd1039, type: 2}
-  - {fileID: 11400000, guid: e037cce26c172e142a5996f2c79a643e, type: 2}
-  - {fileID: 11400000, guid: 4567be01f65ab014784e0e5d3639ddfe, type: 2}
 --- !u!1 &1502710702
 GameObject:
   m_ObjectHideFlags: 0

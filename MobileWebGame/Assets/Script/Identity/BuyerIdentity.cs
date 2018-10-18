@@ -8,7 +8,7 @@ public class BuyerIdentity : MonoBehaviour {
 
     private void Awake()
     {
-        identityBuyer = MainGameManager.instance.ListBuyer[Random.Range(0, MainGameManager.instance.ListBuyer.Count)];
+        identityBuyer = AllGameManager.instance.ListBuyer[Random.Range(0, AllGameManager.instance.ListBuyer.Count)];
     }
 
     // Use this for initialization

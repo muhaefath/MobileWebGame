@@ -9,28 +9,11 @@ public class MainGameManager : MonoBehaviour {
 
     public int IndexLocations;
 
-    public static MainGameManager instance;
     public string[] ListOfScene;
 
-    public int MoneyCurr;
-    public Text MoneyText;
+   
 
-    public int PriceStuff;
-
-    public List<Buyer> ListBuyer;
-    
-    private void Awake()
-    {
-        MoneyText.text = "" + MoneyCurr;
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else {
-            Destroy(gameObject);
-        }
-    }
+   
 
     public void TurnOnSelectLocation(int IndexLocation) {
         if (SelectLocation.activeSelf)

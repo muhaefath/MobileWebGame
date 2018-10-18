@@ -9,15 +9,39 @@ public class UIMainManager : MonoBehaviour {
 
     public int MoneyCurr;
     public Text MoneyCurrText;
-	// Use this for initialization
-	void Start () {
+
+    public GameObject PanelResultToday;
+    public GameObject PanelBahanCollection;
+
+    public float TotalPeoplePass;
+    public float TotalPeopleBuy;
+    public float TotalPeopleCometoBooth;
+    public float TotalPeopleCancelBuy;
+    public float TotalIncome;
+    
+
+    public Image GoalPerDayImage;
+
+    public float ProbabilityBuyCurr;
+
+    public List<AIBuyer> StackBuyer;
+    public Transform[] StackPosition;
+    public Transform StackPositionOut;
+
+    // Use this for initialization
+    void Start () {
         PanelPause.SetActive(false);
-        MoneyCurr = MainGameManager.instance.PriceStuff;
+        PanelResultToday.SetActive(false);
+        MoneyCurr = AllGameManager.instance.PriceStuff;
+        ProbabilityBuyCurr = AllGameManager.instance.ProbabilityBuy;
+
+
     }
 	
 	// Update is called once per frame
 	void Update () {
         MoneyCurrText.text = "" + MoneyCurr;
+        GoalPerDayImage.fillAmount = TotalIncome / AllGameManager.instance.GoalPerDay[AllGameManager.instance.TodayInt - 1];
 	}
 
     public void PauseMenu() {
@@ -27,14 +51,15 @@ public class UIMainManager : MonoBehaviour {
 
     public void ResumeMenu()
     {
-        MoneyCurr = MainGameManager.instance.PriceStuff ;
+        MoneyCurr = AllGameManager.instance.PriceStuff ;
         PanelPause.SetActive(false);
         Time.timeScale = 1;
     }
 
     public void SaveResumeMenu()
     {
-        MainGameManager.instance.PriceStuff = MoneyCurr;
+        AllGameManager.instance.PriceStuff = MoneyCurr;
+        AllGameManager.instance.ProbabilityBuy = ProbabilityBuyCurr; 
         PanelPause.SetActive(false);
         Time.timeScale = 1;
     }
@@ -45,10 +70,12 @@ public class UIMainManager : MonoBehaviour {
 
     public void AddPrice() {
         MoneyCurr += 10;
+        ProbabilityBuyCurr -= 5;
     }
 
     public void MinusPrice()
     {
         MoneyCurr -= 10;
+        ProbabilityBuyCurr += 5;
     }
 }

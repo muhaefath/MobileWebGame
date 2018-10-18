@@ -14,3 +14,9 @@ MonoBehaviour:
   Names: Buyer3
   Icon: {fileID: 0}
   identityInt: 0
+  MaxService: 10
+  ChanceOfTip: 0
+  Tip: 0
+  ProbabilityBuy: 0
+  RangeQuantity: 0
+  IndexTypeMenu: 0
