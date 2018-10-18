@@ -19,14 +19,18 @@ public class AllGameManager : MonoBehaviour {
 
     public float ProbabilityBuy;
 
+    public int[] StockMenu;
+
     [System.Serializable]
     public class CuacaManage {
         public int IndexCuaca;
         public float ProbabilityCuaca;
-        
+        public float LimitTime;
     }
 
     public CuacaManage[] Cuaca;
+    public CuacaManage CuacaCurr;
+  
 
     private void Awake()
     {

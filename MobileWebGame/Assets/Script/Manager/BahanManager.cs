@@ -5,6 +5,8 @@ using UnityEngine.UI;
 public class BahanManager : MonoBehaviour {
     UIMainManager manager;
     public List<Button> BahanCollection;
+    public Text[] MenuQuantityText;
+    public Button[] MenuStockButton;
 
     public bool StackOn;
     // Use this for initialization
@@ -13,6 +15,7 @@ public class BahanManager : MonoBehaviour {
         for (int i = 0; i < this.transform.childCount; i++)
         {
             BahanCollection.Add(this.transform.GetChild(i).GetComponent<Button>());
+            MenuQuantityText[i].text = "" + AllGameManager.instance.StockMenu[i];
         }
 	}
 	

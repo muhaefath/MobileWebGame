@@ -57,6 +57,14 @@ public class AIBuyer : MonoBehaviour {
                 manager.TotalPeopleBuy += 1;
                 AllGameManager.instance.MoneyCurr += AllGameManager.instance.PriceStuff;
                 AllGameManager.instance.MoneyText.text = "" + AllGameManager.instance.MoneyCurr;
+
+                AllGameManager.instance.StockMenu[menu] -= 1;
+                manager3.MenuQuantityText[menu].text = "" + AllGameManager.instance.StockMenu[menu];
+
+                if (AllGameManager.instance.StockMenu[menu] == 0)
+                {
+                    manager3.MenuStockButton[menu].interactable = false;
+                }
             }
             else {
                 StartCoroutine(CountCancelBuy());
@@ -91,6 +99,7 @@ public class AIBuyer : MonoBehaviour {
         LimitTimeBuyImage.enabled = false;
         BuyIcon.enabled = false;
 
+       
         for (int i = 0; i < manager.StackBuyer.Count; i++)
             {
                 manager.StackBuyer[i].transform.position = manager.StackPosition[i].position;
