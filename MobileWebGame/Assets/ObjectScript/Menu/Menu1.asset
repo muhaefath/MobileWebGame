@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: Menu1
   m_EditorClassIdentifier: 
   Names: 
-  Icon: {fileID: 21300000, guid: 81618c69ed25c5e40909ecc118c5e4ef, type: 3}
+  Icon: {fileID: 21300000, guid: ae9baa519562c2449884156e07bb1d0c, type: 3}
   identityInt: 0
