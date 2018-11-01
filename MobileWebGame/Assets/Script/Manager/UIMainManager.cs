@@ -35,11 +35,11 @@ public class UIMainManager : MonoBehaviour {
         MoneyCurr = AllGameManager.instance.PriceStuff;
         ProbabilityBuyCurr = AllGameManager.instance.ProbabilityBuy;
 
-
     }
 	
 	// Update is called once per frame
 	void Update () {
+        //MoneyCurr = AllGameManager.instance.MoneyCurr;
         MoneyCurrText.text = "" + MoneyCurr;
         GoalPerDayImage.fillAmount = TotalIncome / AllGameManager.instance.GoalPerDay[AllGameManager.instance.TodayInt - 1];
 	}
@@ -78,4 +78,6 @@ public class UIMainManager : MonoBehaviour {
         MoneyCurr -= 10;
         ProbabilityBuyCurr += 5;
     }
+
+   
 }

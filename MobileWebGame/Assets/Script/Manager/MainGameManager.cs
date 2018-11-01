@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MainGameManager : MonoBehaviour {
 
+    public GameObject selectexpand;
     public GameObject SelectLocation;
     public GameObject StockManage;
 
@@ -26,9 +27,16 @@ public class MainGameManager : MonoBehaviour {
 
     public GameObject PanelAreyousure;
 
+    //// expand management
+    public int TotalExpand;
+    public int[] PriceExpandPerTotalExpand;
+    public bool[] LocationIsActive;
+    public Button[] SelectLocationButton;
+
     private void Start()
     {
-        SelectLocation.SetActive(true);
+        selectexpand.SetActive(true);
+        SelectLocation.SetActive(false);
         StockManage.SetActive(false);
         PanelAreyousure.SetActive(false);
 
@@ -145,5 +153,27 @@ public class MainGameManager : MonoBehaviour {
         }
         CancelSave();
         PanelAreyousure.SetActive(false);
+    }
+
+    public void SelectExpand(int index) {
+        AllGameManager.instance.MoneyCurr -= PriceExpandPerTotalExpand[TotalExpand];
+        AllGameManager.instance.MoneyText.text = "" + AllGameManager.instance.MoneyCurr;
+        TotalExpand += 1;
+        LocationIsActive[index] = true;
+
+
+        selectexpand.SetActive(false);
+        SelectLocation.SetActive(true);
+        CheckLocationActive();
+    }
+
+    void CheckLocationActive() {
+        for (int i = 0; i < LocationIsActive.Length; i++)
+        {
+            if (!LocationIsActive[i])
+            {
+                SelectLocationButton[i].interactable = false;
+            }
+        }
     }
 }

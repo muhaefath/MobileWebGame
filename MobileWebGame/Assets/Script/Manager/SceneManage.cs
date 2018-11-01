@@ -17,4 +17,8 @@ public class SceneManage : MonoBehaviour {
     public void PindahScene(string namascene) {
         SceneManager.LoadScene(namascene);
     }
+
+    public void QuitApp() {
+        Application.Quit();
+    }
 }

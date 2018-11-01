@@ -30,7 +30,16 @@ public class AllGameManager : MonoBehaviour {
 
     public CuacaManage[] Cuaca;
     public CuacaManage CuacaCurr;
-  
+
+    [System.Serializable]
+    public class TokoManage {
+        public string NamaAtribut;
+        public int LevelAtribut;
+        public int PriceNextLevel;
+        public int chaceEfecct;
+    }
+
+    public TokoManage[] tokomanage;
 
     private void Awake()
     {

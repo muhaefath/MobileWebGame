@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class AISpawnBuyer : MonoBehaviour {
 
     public Transform[] SpawnLocation;
+    public float IdentitityLocation;
     public GameObject BuyerPrefab;
 
     public float LimitTime;
@@ -18,6 +19,8 @@ public class AISpawnBuyer : MonoBehaviour {
     public int CuacaIndex;
 
     public Light DirectLight;
+
+    
 
     private void Awake()
     {
@@ -61,7 +64,18 @@ public class AISpawnBuyer : MonoBehaviour {
             manager.TotalPeoplePass += 1;
             int random = Random.Range(0, SpawnLocation.Length);
             Instantiate(BuyerPrefab, SpawnLocation[random].position, SpawnLocation[random].rotation);
+            
             LimitTime = AllGameManager.instance.CuacaCurr.LimitTime;
+
+            if (random == 0)
+            {
+                IdentitityLocation = 1;
+            }
+            else
+            {
+                IdentitityLocation = -1;
+            }
+
         }
     }
 

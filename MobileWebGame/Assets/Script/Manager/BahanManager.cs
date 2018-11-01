@@ -49,4 +49,9 @@ public class BahanManager : MonoBehaviour {
         } 
         Debug.Log(indexBahan);
     }
+
+    public void StockIsEmpty()
+    {
+        manager.StackBuyer[0].QuitForStockEmpty = true;
+    }
 }

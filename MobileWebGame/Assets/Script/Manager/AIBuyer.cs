@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class AIBuyer : MonoBehaviour {
 
     public bool BuyNot;
-    public bool Served;
+    public bool Served, QuitForStockEmpty;
     public int random;
     public int menu;
     public bool BuyDone;
@@ -21,12 +21,20 @@ public class AIBuyer : MonoBehaviour {
 
     MenuIdentity manager4;
 
-	// Use this for initialization
-	void Start () {
+    AISpawnBuyer manager6;
+    public float DirectionIdentity;
+
+    private void Awake()
+    {
+        manager6 = FindObjectOfType<AISpawnBuyer>();
+    }
+    // Use this for initialization
+    void Start () {
         manager = FindObjectOfType<UIMainManager>();
         manager2 = FindObjectOfType<BuyerIdentity>();
         manager3 = FindObjectOfType<BahanManager>();
         manager4 = GetComponent<MenuIdentity>();
+        DirectionIdentity = manager6.IdentitityLocation;
 
         LimitTimeBuy = manager2.identityBuyer.MaxService;
         LimitTimeBuyCurr = manager2.identityBuyer.MaxService;
@@ -45,11 +53,16 @@ public class AIBuyer : MonoBehaviour {
     {
         if (!BuyNot)
         {
-            transform.Translate(-25f * Time.fixedDeltaTime, 0, 0);
+            transform.Translate(-25f *DirectionIdentity  * Time.fixedDeltaTime, 0, 0);
         }
         
         else if (BuyNot )
         {
+            if (QuitForStockEmpty)
+            {
+                BuyStuff();
+                return;
+            }
             if (Served)
             {
                 BuyStuff();
