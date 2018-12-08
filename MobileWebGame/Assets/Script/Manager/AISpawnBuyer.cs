@@ -20,11 +20,27 @@ public class AISpawnBuyer : MonoBehaviour {
 
     public Light DirectLight;
 
-    
+    [System.Serializable]
+    public class AIpath {
+        public Transform[] path;
+    }
+
+    public AIpath[] aipaths;
+
+    public Transform[] stackout;
+
+    public Transform TokoGameObject;
+
+    public bool onceDayCount = false;
+
+    public Transform[] PersonNotbBuyLocation;
+    public GameObject[] PersonNotbBuy;
+    public float LimitTimePerson;
 
     private void Awake()
     {
-        CuacaIndex = Random.Range(0,100);
+        //CuacaIndex = Random.Range(0,100);
+        CuacaIndex = 1;
         if (CuacaIndex > 50)
         {
             AllGameManager.instance.CuacaCurr = AllGameManager.instance.Cuaca[0];
@@ -49,6 +65,7 @@ public class AISpawnBuyer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         StartCoroutine(SpawnBuyer());
+        StartCoroutine(SpawnPersonNotBuy());
         TimePerDayManager();
 	}
 
@@ -79,7 +96,37 @@ public class AISpawnBuyer : MonoBehaviour {
         }
     }
 
+    IEnumerator SpawnPersonNotBuy()
+    {
+
+        if (LimitTimePerson > 0)
+        {
+            LimitTimePerson -= Time.fixedDeltaTime;
+            yield return 0;
+        }
+        else
+        {
+
+          //  manager.TotalPeoplePass += 1;
+            int random = Random.Range(0, PersonNotbBuyLocation.Length);
+            Instantiate(PersonNotbBuy[0], PersonNotbBuyLocation[random].position, PersonNotbBuyLocation[random].rotation);
+
+           // LimitTime = AllGameManager.instance.CuacaCurr.LimitTime;
+          
+            if (random <= 2)
+            {
+                IdentitityLocation = 1;
+            }
+            else
+            {
+                IdentitityLocation = -1;
+            }
+            LimitTimePerson = 2.5f;
+        }
+    }
+
     void TimePerDayManager() {
+      
         TimeperDayFloat -= Time.deltaTime;
         TimeperDayImage.fillAmount = TimeperDayFloat / 100;
         if (TimeperDayFloat <= 0)
@@ -91,6 +138,11 @@ public class AISpawnBuyer : MonoBehaviour {
                 AllGameManager.instance.StockMenu[i] = 0;
             }
             Time.timeScale = 0;
+            if (!onceDayCount) {
+                AllGameManager.instance.DayCount += 1;
+                onceDayCount = true;
+            }
+           
         }
        
     }

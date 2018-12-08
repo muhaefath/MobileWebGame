@@ -35,5 +35,7 @@ public class ResultManager : MonoBehaviour {
     public void CloseResultMenu(string nama) {
         AllGameManager.instance.TodayInt += 1;
         SceneManager.LoadScene(nama);
+        Time.timeScale = 1;
+        AllGameManager.instance.SavePlayers();
     }
 }

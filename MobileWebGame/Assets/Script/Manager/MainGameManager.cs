@@ -62,7 +62,7 @@ public class MainGameManager : MonoBehaviour {
             StockManage.SetActive(true);
             IndexLocations = IndexLocation;
             Time.timeScale = 1;
-           
+            
             // SceneManager.LoadScene(ListOfScene[IndexLocation -1]);
         }
         else {
@@ -160,6 +160,7 @@ public class MainGameManager : MonoBehaviour {
         AllGameManager.instance.MoneyText.text = "" + AllGameManager.instance.MoneyCurr;
         TotalExpand += 1;
         LocationIsActive[index] = true;
+        AllGameManager.instance.RukoActive[index] = true;
 
 
         selectexpand.SetActive(false);
@@ -170,7 +171,7 @@ public class MainGameManager : MonoBehaviour {
     void CheckLocationActive() {
         for (int i = 0; i < LocationIsActive.Length; i++)
         {
-            if (!LocationIsActive[i])
+            if (!AllGameManager.instance.RukoActive[i])
             {
                 SelectLocationButton[i].interactable = false;
             }

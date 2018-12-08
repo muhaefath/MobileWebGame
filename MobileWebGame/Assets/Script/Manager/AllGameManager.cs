@@ -21,6 +21,8 @@ public class AllGameManager : MonoBehaviour {
 
     public int[] StockMenu;
 
+    public int DayCount;
+
     [System.Serializable]
     public class CuacaManage {
         public int IndexCuaca;
@@ -40,10 +42,12 @@ public class AllGameManager : MonoBehaviour {
     }
 
     public TokoManage[] tokomanage;
+    public bool[] RukoActive;
+
 
     private void Awake()
     {
-      
+
         if (instance == null)
         {
             instance = this;
@@ -55,12 +59,27 @@ public class AllGameManager : MonoBehaviour {
         }
     }
     // Use this for initialization
-    void Start () {
+    void Start() {
         MoneyText.text = "" + MoneyCurr;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update() {
+
+    }
+
+    public void SavePlayers() {
+        SaveSystem.SavePlayer(this);
+    }
+
+    public void LoadPlayers() {
+       PlayerData data =   SaveSystem.loadPlayer();
+
+        MoneyCurr = data.Money;
+        DayCount = data.DayCount;
+        for (int i = 0; i < RukoActive.Length; i++)
+        {
+            RukoActive[i] = data.RukoSelect[i];
+        }
+    }
 }

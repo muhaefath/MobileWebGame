@@ -12,6 +12,13 @@ public class AIBuyer : MonoBehaviour {
     public float LimitTimeBuy;
     public float LimitTimeBuyCurr;
 
+    public bool BuyMove;
+    public int MoveIndex;
+    public int MoveIndexChild;
+    public Transform targetMove;
+    public int NumberinArray;
+    public int MoveIndexOut;
+
     public Image BuyIcon;
     public Image LimitTimeBuyImage;
 
@@ -42,6 +49,7 @@ public class AIBuyer : MonoBehaviour {
         LimitTimeBuyImage.enabled = false;
         BuyIcon.enabled = false;
 
+        targetMove = manager6.aipaths[MoveIndex].path[0];
     }
 	
 	// Update is called once per frame
@@ -58,30 +66,115 @@ public class AIBuyer : MonoBehaviour {
         
         else if (BuyNot )
         {
-            if (QuitForStockEmpty)
+            if (BuyMove)
             {
-                BuyStuff();
-                return;
-            }
-            if (Served)
-            {
-                BuyStuff();
-                manager.TotalIncome += manager.MoneyCurr;
-                manager.TotalPeopleBuy += 1;
-                AllGameManager.instance.MoneyCurr += AllGameManager.instance.PriceStuff;
-                AllGameManager.instance.MoneyText.text = "" + AllGameManager.instance.MoneyCurr;
+                Vector3 dir = targetMove.position - this.transform.position;
+                dir.y = 0;
 
-                AllGameManager.instance.StockMenu[menu] -= 1;
-                manager3.MenuQuantityText[menu].text = "" + AllGameManager.instance.StockMenu[menu];
-
-                if (AllGameManager.instance.StockMenu[menu] == 0)
+                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir),0.1f);
+                transform.Translate(dir.normalized * 25f * Time.deltaTime);
+                
+                if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
                 {
-                    manager3.MenuStockButton[menu].interactable = false;
+                    if (MoveIndexChild == 1 )
+                    {
+                      //  manager.StackBuyer.Add(this);
+                        BuyMove = false;
+                        return;
+                    }
+                    else if (MoveIndex == NumberinArray + 2 )
+                    {
+                        // MoveIndex += 1;
+                        MoveIndexChild += 1;
+                        targetMove = manager6.aipaths[MoveIndex].path[MoveIndexChild];
+                      //  Vector3 dir2 = manager6.TokoGameObject.position - this.transform.position;
+                        this.transform.rotation = Quaternion.LookRotation(manager6.TokoGameObject.position);
+                        return;
+                    }
+                    if (MoveIndex != manager6.aipaths.Length -1) {
+                        MoveIndex += 1;
+                        targetMove = manager6.aipaths[MoveIndex].path[MoveIndexChild];
+                    }
+                   
                 }
             }
             else {
-                StartCoroutine(CountCancelBuy());
-                
+                if (QuitForStockEmpty)
+                {
+                    //manager.StackBuyer.Remove(this);
+                    //  manager.StackBuyer.Remove(this);
+                    BuyDone = true;
+                    targetMove = manager6.stackout[MoveIndexOut];
+
+                        Vector3 dir = targetMove.position - this.transform.position;
+                        dir.y = 0;
+
+                       // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
+                        transform.Translate(dir.normalized * 25f * Time.deltaTime);
+
+                        if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
+                        {
+                           
+                            if (MoveIndexOut == 1)
+                            {
+
+                                BuyStuff();
+                              }
+                             else {
+                                MoveIndexOut += 1;
+                                targetMove = manager6.stackout[MoveIndexOut];
+                             }
+                        }
+                    
+                     
+                    
+                    return;
+                }
+                if (Served)
+                {
+                    //  manager.StackBuyer.Remove(this);
+                    BuyDone = true;
+                    targetMove = manager6.stackout[MoveIndexOut];
+
+                    Vector3 dir = targetMove.position - this.transform.position;
+                    dir.y = 0;
+
+                    // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
+                    transform.Translate(dir.normalized * 25f * Time.deltaTime);
+
+                    if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
+                    {
+
+                        if (MoveIndexOut == 1)
+                        {
+                            BuyStuff();
+                            manager.TotalIncome += manager.MoneyCurr;
+                            manager.TotalPeopleBuy += 1;
+                            AllGameManager.instance.MoneyCurr += AllGameManager.instance.PriceStuff;
+                            AllGameManager.instance.MoneyText.text = "" + AllGameManager.instance.MoneyCurr;
+
+                            AllGameManager.instance.StockMenu[menu] -= 1;
+                            manager3.MenuQuantityText[menu].text = "" + AllGameManager.instance.StockMenu[menu];
+
+                            if (AllGameManager.instance.StockMenu[menu] == 0)
+                            {
+                                manager3.MenuStockButton[menu].interactable = false;
+                            }
+                            Debug.Log("Masuk sini Index");
+                        }
+                        else {
+                            MoveIndexOut += 1;
+                            targetMove = manager6.stackout[MoveIndexOut];
+                        }
+                       
+                    }
+                    
+                }
+                else
+                {
+                    
+                    StartCoroutine(CountCancelBuy());   
+                }
             }
            
         }
@@ -94,8 +187,32 @@ public class AIBuyer : MonoBehaviour {
             LimitTimeBuyImage.fillAmount = LimitTimeBuy / LimitTimeBuyCurr;
         }
         else {
-            BuyStuff();
-           //  manager.TotalIncome += manager.MoneyCurr;
+
+            BuyDone = true;
+
+            targetMove = manager6.stackout[MoveIndexOut];
+
+            Vector3 dir = targetMove.position - this.transform.position;
+            dir.y = 0;
+
+            // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
+            transform.Translate(dir.normalized * 25f * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
+            {
+
+                if (MoveIndexOut == 1)
+                {
+
+                    BuyStuff();
+                }
+                else
+                {
+                    MoveIndexOut += 1;
+                    targetMove = manager6.stackout[MoveIndexOut];
+                }
+            }
+            //  manager.TotalIncome += manager.MoneyCurr;
             manager.TotalPeopleCancelBuy += 1;
            
         }
@@ -106,19 +223,32 @@ public class AIBuyer : MonoBehaviour {
 
     void BuyStuff() {
         // yield return new WaitForSeconds(2f);
-        this.transform.position = manager.StackPositionOut.position;
-        BuyDone = true;
+        
         manager.StackBuyer.Remove(this);
+       // this.transform.position = manager.StackPositionOut.position;
+        
+       
         LimitTimeBuyImage.enabled = false;
         BuyIcon.enabled = false;
 
-       
-        for (int i = 0; i < manager.StackBuyer.Count; i++)
-            {
-                manager.StackBuyer[i].transform.position = manager.StackPosition[i].position;
-            }
-            
         BuyNot = false;
+        for (int i = NumberinArray; i < manager.StackBuyer.Count; i++)
+            {
+            // manager.StackBuyer[i].transform.position = manager.StackPosition[i].position;
+            if ( manager.StackBuyer[i].MoveIndex <= 2)
+            {
+                manager.StackBuyer[i].NumberinArray -= 1;
+                return;
+            }
+            else {
+                manager.StackBuyer[i].BuyMove = true;
+                manager.StackBuyer[i].MoveIndex -= 1;
+                manager.StackBuyer[i].targetMove = manager6.aipaths[manager.StackBuyer[i].MoveIndex].path[1];
+                manager.StackBuyer[i].NumberinArray -= 1;
+            }
+        }
+            
+       
 
     }
 
@@ -132,7 +262,8 @@ public class AIBuyer : MonoBehaviour {
     {
         if (other.gameObject.tag == "Toko")
         {
-            if (manager.StackBuyer.Count >4 || BuyDone )
+           
+            if (manager.StackBuyer.Count >4 || BuyDone || BuyNot)
             {
                 return;
             }
@@ -141,16 +272,20 @@ public class AIBuyer : MonoBehaviour {
                 return;
             }
             manager3.StackOn = true;
-             menu = Random.Range(0,3);
+             menu = Random.Range(0, AllGameManager.instance.ListMenu.Count);
             manager4.identityBuyer = AllGameManager.instance.ListMenu[menu];
             BuyIcon.sprite = manager4.identityBuyer.Icon;
 
             manager.TotalPeopleCometoBooth += 1;
 
             BuyNot = true;
+
+            //  this.transform.position =  manager.StackPosition[manager.StackBuyer.Count].position;
             
-            this.transform.position =  manager.StackPosition[manager.StackBuyer.Count].position;
-            manager.StackBuyer.Add(this);
+            BuyMove = true;
+            NumberinArray = manager.StackBuyer.Count;
+             manager.StackBuyer.Add(this);
+           
 
             LimitTimeBuyImage.enabled = true;
             BuyIcon.enabled = true;
