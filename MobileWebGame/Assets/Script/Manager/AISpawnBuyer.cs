@@ -65,7 +65,7 @@ public class AISpawnBuyer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         StartCoroutine(SpawnBuyer());
-        StartCoroutine(SpawnPersonNotBuy());
+      //  StartCoroutine(SpawnPersonNotBuy());
         TimePerDayManager();
 	}
 
@@ -109,7 +109,7 @@ public class AISpawnBuyer : MonoBehaviour {
 
           //  manager.TotalPeoplePass += 1;
             int random = Random.Range(0, PersonNotbBuyLocation.Length);
-            Instantiate(PersonNotbBuy[0], PersonNotbBuyLocation[random].position, PersonNotbBuyLocation[random].rotation);
+            Instantiate(PersonNotbBuy[0], PersonNotbBuyLocation[random].position, PersonNotbBuy[random].transform.rotation);
 
            // LimitTime = AllGameManager.instance.CuacaCurr.LimitTime;
           

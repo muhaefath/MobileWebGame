@@ -31,6 +31,8 @@ public class AIBuyer : MonoBehaviour {
     AISpawnBuyer manager6;
     public float DirectionIdentity;
 
+    public bool NotAction;
+
     private void Awake()
     {
         manager6 = FindObjectOfType<AISpawnBuyer>();
@@ -61,24 +63,34 @@ public class AIBuyer : MonoBehaviour {
     {
         if (!BuyNot)
         {
-            transform.Translate(-25f *DirectionIdentity  * Time.fixedDeltaTime, 0, 0);
+            // transform.Translate(0, 0, -25f * DirectionIdentity * Time.fixedDeltaTime);
+            transform.Translate(0, 0, 25f  * Time.fixedDeltaTime);
         }
         
         else if (BuyNot )
         {
+           
             if (BuyMove)
             {
                 Vector3 dir = targetMove.position - this.transform.position;
                 dir.y = 0;
-
-                this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir),0.1f);
-                transform.Translate(dir.normalized * 25f * Time.deltaTime);
                 
+              
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
+                    
+                
+                
+
+                transform.Translate(dir.normalized * 25f * Time.deltaTime);
+
                 if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
                 {
                     if (MoveIndexChild == 1 )
                     {
-                      //  manager.StackBuyer.Add(this);
+                        //  manager.StackBuyer.Add(this);
+
+                        //this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(targetMove.position - manager6.TokoGameObject.position), 0.1f);
+                       // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir2), 0.1f);
                         BuyMove = false;
                         return;
                     }
@@ -87,8 +99,9 @@ public class AIBuyer : MonoBehaviour {
                         // MoveIndex += 1;
                         MoveIndexChild += 1;
                         targetMove = manager6.aipaths[MoveIndex].path[MoveIndexChild];
-                      //  Vector3 dir2 = manager6.TokoGameObject.position - this.transform.position;
-                        this.transform.rotation = Quaternion.LookRotation(manager6.TokoGameObject.position);
+                       // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(targetMove.position - manager6.TokoGameObject.position), 0.1f);
+                        //  Vector3 dir2 = manager6.TokoGameObject.position - this.transform.position;
+                        // this.transform.rotation = Quaternion.LookRotation(manager6.TokoGameObject.position);
                         return;
                     }
                     if (MoveIndex != manager6.aipaths.Length -1) {
@@ -99,20 +112,31 @@ public class AIBuyer : MonoBehaviour {
                 }
             }
             else {
+
+                if (!NotAction) {
+                    Vector3 dir2 = new Vector3(0, -90, 0);
+                    //  dir2.y = 0;
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.EulerAngles(dir2), 0.1f);
+                }
+
                 if (QuitForStockEmpty)
                 {
                     //manager.StackBuyer.Remove(this);
                     //  manager.StackBuyer.Remove(this);
                     BuyDone = true;
+                    NotAction = true;
                     targetMove = manager6.stackout[MoveIndexOut];
 
                         Vector3 dir = targetMove.position - this.transform.position;
                         dir.y = 0;
 
-                       // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
-                        transform.Translate(dir.normalized * 25f * Time.deltaTime);
+                    // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
+                    //  transform.Translate(dir.normalized * 25f * Time.deltaTime);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.5f);
+                    // transform.Translate(dir.normalized * 25f * Time.deltaTime);
+                    transform.Translate(0, 0, 15 * Time.deltaTime);
 
-                        if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
+                    if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
                         {
                            
                             if (MoveIndexOut == 1)
@@ -134,14 +158,18 @@ public class AIBuyer : MonoBehaviour {
                 {
                     //  manager.StackBuyer.Remove(this);
                     BuyDone = true;
+                    NotAction = true;
                     targetMove = manager6.stackout[MoveIndexOut];
 
                     Vector3 dir = targetMove.position - this.transform.position;
                     dir.y = 0;
 
                     // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
-                    transform.Translate(dir.normalized * 25f * Time.deltaTime);
-
+                    //  transform.Translate(dir.normalized * 25f * Time.deltaTime);
+                    this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.5f);
+                    // transform.Translate(dir.normalized * 25f * Time.deltaTime);
+                    transform.Translate(0, 0, 15 * Time.deltaTime);
+                    manager.audioCollection[0].Play();
                     if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
                     {
 
@@ -173,7 +201,8 @@ public class AIBuyer : MonoBehaviour {
                 else
                 {
                     
-                    StartCoroutine(CountCancelBuy());   
+                    StartCoroutine(CountCancelBuy());
+                    
                 }
             }
            
@@ -189,15 +218,15 @@ public class AIBuyer : MonoBehaviour {
         else {
 
             BuyDone = true;
-
+            NotAction = true;
             targetMove = manager6.stackout[MoveIndexOut];
 
             Vector3 dir = targetMove.position - this.transform.position;
             dir.y = 0;
 
-            // this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.1f);
-            transform.Translate(dir.normalized * 25f * Time.deltaTime);
-
+             this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(dir), 0.5f);
+            // transform.Translate(dir.normalized * 25f * Time.deltaTime);
+            transform.Translate(0,0,15*Time.deltaTime);
             if (Vector3.Distance(transform.position, targetMove.position) <= 0.2f)
             {
 

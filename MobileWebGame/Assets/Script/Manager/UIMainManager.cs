@@ -28,6 +28,8 @@ public class UIMainManager : MonoBehaviour {
     public Transform[] StackPosition;
     public Transform StackPositionOut;
 
+    public AudioSource[] audioCollection;
+
     // Use this for initialization
     void Start () {
         PanelPause.SetActive(false);
